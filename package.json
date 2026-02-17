@@ -1,0 +1,20 @@
+{
+  "name": "lab-express-testing",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Lab: Testing de una API Express con Vitest y Supertest",
+  "scripts": {
+    "dev": "node --watch app.js",
+    "test": "NODE_ENV=test vitest run",
+    "test:watch": "NODE_ENV=test vitest"
+  },
+  "dependencies": {
+    "express": "^4.21.2",
+    "mongoose": "^8.12.1",
+    "morgan": "^1.10.0"
+  },
+  "devDependencies": {
+    "supertest": "^7.1.0",
+    "vitest": "^3.0.8"
+  }
+}
