@@ -173,10 +173,35 @@ describe("API de Movies - CRUD completo", () => {
     it("debería crear, leer, actualizar y eliminar una película", async () => {
       // TODO (BONUS): Implementar el flujo completo en un solo test
       // 1. POST - Crear una película → verificar 201
+      const response = await request(app)
+        .post("/api/movies")
+        .send({ title: "Inception", director: "Christopher Nolan" })
+        .expect(201);
       // 2. GET  - Leer la película creada → verificar 200 y datos correctos
+      const responseDetails = await request(app)
+        .get(`/api/movies/${ response.body._id }`)
+        .expect(200);
+        
+        expect(responseDetails.body.director).toBe("Christopher Nolan");
+        expect(responseDetails.body.title).toBe("Inception");
+        expect(responseDetails.body._id).toBeDefined();
+
       // 3. PATCH - Actualizar el título → verificar 200 y cambio aplicado
+      const responseUpdate = await request(app)
+        .patch(`/api/movies/${ response.body._id }`)
+        .send({ director: 'Esteso y Pajares' })
+        .expect(200);
+
+        expect(responseUpdate.body.director).toBe('Esteso y Pajares');
       // 4. DELETE - Eliminar la película → verificar 204
+      const responseDelete = await request(app)
+        .delete(`/api/movies/${ response.body._id }`)
+        .expect(204);
+
       // 5. GET  - Intentar leer la película eliminada → verificar 404
+      await request(app)
+        .get(`/api/movies/${ response.body._id}`)
+        .expect(404);
     });
   });
 });
